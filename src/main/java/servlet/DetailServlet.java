@@ -34,12 +34,9 @@ public class DetailServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("tid"));
         TourDao dao = new TourDao();
         Tour t = dao.getTourByID(id);
-//        Tour last = dao.getLast();
         List<Tour> tourRelated = dao.getTop4();
         request.getServletContext().setAttribute("tRelated", tourRelated);
         request.setAttribute("detail", t);
-
-//        request.setAttribute("t", last);
         request.getRequestDispatcher("single.jsp").forward(request, response);
     }
 

@@ -32,6 +32,10 @@
         <servlet-name>DetailTourGuide</servlet-name>
         <servlet-class>servlet.DetailTourGuide</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegionListTour</servlet-name>
+        <servlet-class>servlet.RegionListTour</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/HomeController</url-pattern>
@@ -64,9 +68,18 @@
         <servlet-name>DetailTourGuide</servlet-name>
         <url-pattern>/detailGuide</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegionListTour</servlet-name>
+        <url-pattern>/regionList</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>
+            HomeController
+        </welcome-file>
+    </welcome-file-list>
 </web-app>

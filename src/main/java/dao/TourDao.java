@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -120,6 +119,7 @@ public class TourDao {
                 + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
                 + "JOIN region ON tour.regionId = region.regionId\n"
                 + "JOIN schedule ON tour.scheduleId = schedule.scheduleId\n"
+                + "JOIN tourGuider ON tour.guideId = tourGuider.guideId\n"
                 + "where tourId = ?";
         try {
             this.con = DbCon.getConnection();
@@ -147,7 +147,9 @@ public class TourDao {
                         rs.getBoolean("status"),
                         rs.getString("placeName"),
                         rs.getString("hotelName"),
-                        rs.getString("regionName"));
+                        rs.getString("regionName"),
+                        rs.getInt("guideId"),
+                        rs.getString("guideName"));
 
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -155,35 +157,34 @@ public class TourDao {
         return null;
     }
 
-    public Tour getLast() {
-//        String query = "select top 1 * from tour\n"
+//    public Tour getLast() {
+////        String query = "select top 1 * from tour\n"
+////                + "order by tourId desc";
+//        String query = "SELECT top 1 *, place.placeName, hotel.hotelName\n"
+//                + "FROM tour\n"
+//                + "JOIN place ON tour.placeId = place.placeId \n"
+//                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
 //                + "order by tourId desc";
-        String query = "SELECT top 1 *, place.placeName, hotel.hotelName\n"
-                + "FROM tour\n"
-                + "JOIN place ON tour.placeId = place.placeId \n"
-                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
-                + "order by tourId desc";
-        try {
-            pst = this.con.prepareStatement(query);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                return new Tour(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getFloat(3),
-                        rs.getDate(4),
-                        rs.getDate(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getBoolean(8),
-                        rs.getString(9),
-                        rs.getString(10));
-
-            }
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
+//        try {
+//            pst = this.con.prepareStatement(query);
+//            rs = pst.executeQuery();
+//            while (rs.next()) {
+//                return new Tour(rs.getInt(1),
+//                        rs.getString(2),
+//                        rs.getFloat(3),
+//                        rs.getDate(4),
+//                        rs.getDate(5),
+//                        rs.getString(6),
+//                        rs.getString(7),
+//                        rs.getBoolean(8),
+//                        rs.getString(9),
+//                        rs.getString(10));
+//
+//            }
+//        } catch (Exception e) {
+//        }
+//        return null;
+//    }
     public List<Tour> getTop4() {
         List<Tour> list = new ArrayList<>();
         String query = "select top 4 * from tour";
@@ -191,17 +192,8 @@ public class TourDao {
             pst = this.con.prepareStatement(query);
             rs = pst.executeQuery();
             while (rs.next()) {
-                list.add(new Tour(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getFloat(3),
-                        rs.getDate(4),
-                        rs.getDate(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getBoolean(8),
-                        rs.getString(9),
-                        rs.getString(10)));
-
+                Tour tour = extractTourFromResultSet(rs);
+                list.add(tour);
             }
         } catch (SQLException e) {
         }
@@ -267,49 +259,44 @@ public class TourDao {
         return list;
     }
 
-//    public List<Tour> getSearch(String searchStr) {
-//        List<Tour> list = new ArrayList<>();
-////
-////        String query = "SELECT *\n"
-////                + "FROM tour\n"
-////                + "JOIN place ON tour.placeId = place.placeId\n"
-////                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
-////                + "JOIN region ON tour.regionId = region.regionId\n"
-////                + "WHERE name LIKE ?;";
-//
-//        String query = "SELECT *, place.placeName, hotel.hotelName "
-//                + "FROM tour "
-//                + "JOIN place ON tour.placeId = place.placeId "
-//                + "JOIN hotel ON tour.hotelId = hotel.hotelId "
-//                + "JOIN region ON tour.regionId = region.regionId "
-//                + "JOIN schedule ON tour.scheduleId = schedule.scheduleId "
-//                + "WHERE regionName LIKE ? OR name LIKE ?";
-//        try {
-//            this.con = DbCon.getConnection();
-//            pst = this.con.prepareStatement(query);
-//            pst.setString(1, "%" + searchStr + "%");
-//            rs = pst.executeQuery();
-//            while (rs.next()) {
-//                Tour row = new Tour();
-//                row.setTourId(rs.getInt("tourId"));
-//                row.setTourName(rs.getString("name"));
-//                row.setImageTour(rs.getString("image"));
-//                row.setPrice(rs.getFloat("price"));
-//                row.setDateStart(rs.getDate("dateStart"));
-//                row.setDateEnd(rs.getDate("dateEnd"));
-//                row.setDetailTour(rs.getString("detail"));
-//                row.setStatusTour(rs.getBoolean("status"));
-//                row.setPlaceName(rs.getString("placeName"));
-//                row.setHotelName(rs.getString("hotelName"));
-//                row.setRegionName(rs.getString("regionName"));
-//
-//                list.add(row);
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(TourDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return list;
-//    }
+    public List<Tour> getToursFromRegion(int id) {
+        List<Tour> tours = new ArrayList<>();
+
+        String query = "SELECT *\n"
+                + "FROM region\n"
+                + "JOIN tour ON tour.regionId = region.regionId \n"
+                + "JOIN place ON tour.placeId = place.placeId\n"
+                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
+                + "JOIN tourGuider ON tour.guideId = tourGuider.guideId\n"
+                + "\n"
+                + "where region.regionId = ?";
+        try {
+            this.con = DbCon.getConnection();
+
+            pst = this.con.prepareStatement(query);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Tour tour = new Tour(
+                        rs.getInt("tourId"),
+                        rs.getString("name"),
+                        rs.getFloat("price"),
+                        rs.getDate("dateStart"),
+                        rs.getDate("dateEnd"),
+                        rs.getString("detail"),
+                        rs.getString("image"),
+                        rs.getBoolean("status"),
+                        rs.getString("placeName"),
+                        rs.getString("hotelName"),
+                        rs.getString("regionName"),
+                        rs.getInt("guideId"),
+                        rs.getString("guideName"));
+                tours.add(tour);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            // Xử lý lỗi
+        }
+        return tours;
+    }
+
 }

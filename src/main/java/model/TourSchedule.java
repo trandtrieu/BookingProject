@@ -25,8 +25,19 @@ public class TourSchedule extends Tour {
         return scheduleId;
     }
 
-    public TourSchedule(int scheduleId, String day1, String day2, String day3, String day4, String day5, String day6, String day7, int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName, String hotelName, String regionName) {
-        super(tourId, tourName, price, dateStart, dateEnd, detailTour, imageTour, statusTour, placeName, hotelName, regionName);
+    public TourSchedule(String day1, String day2, String day3, String day4, String day5, String day6, String day7, int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName, String hotelName, String regionName, int guideId, String guideName) {
+        super(tourId, tourName, price, dateStart, dateEnd, detailTour, imageTour, statusTour, placeName, hotelName, regionName, guideId, guideName);
+        this.day1 = day1;
+        this.day2 = day2;
+        this.day3 = day3;
+        this.day4 = day4;
+        this.day5 = day5;
+        this.day6 = day6;
+        this.day7 = day7;
+    }
+
+    public TourSchedule(int scheduleId, String day1, String day2, String day3, String day4, String day5, String day6, String day7, int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName, String hotelName, String regionName, int guideId, String guideName) {
+        super(tourId, tourName, price, dateStart, dateEnd, detailTour, imageTour, statusTour, placeName, hotelName, regionName, guideId, guideName);
         this.scheduleId = scheduleId;
         this.day1 = day1;
         this.day2 = day2;
@@ -36,6 +47,8 @@ public class TourSchedule extends Tour {
         this.day6 = day6;
         this.day7 = day7;
     }
+
+
 
     public TourSchedule() {
 

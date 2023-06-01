@@ -4,12 +4,16 @@
  */
 package model;
 
+import connection.DbCon;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -56,4 +60,6 @@ public class RegionDao {
         }
         return regions;
     }
+
+    
 }

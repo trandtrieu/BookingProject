@@ -19,8 +19,7 @@
     </style>
     <body>
         <%@include file="includes/topbar.jsp" %>
-        <%@include file="includes/carousel.jsp" %>
-        <%@include file="includes/search.jsp" %>
+
 
         
 
@@ -33,7 +32,7 @@
                     <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Khám phá</h6>
                     <h1>Danh sách tua</h1>
                 </div>
-                <div class="row">
+                <div class="row">   
                     <c:set var="itemsPerPage" value="12" /> <!-- Số lượng mục hiển thị trên mỗi trang -->
                     <c:set var="currentPage" value="${param.pageNumber eq null ? 1 : param.pageNumber}" /> <!-- Trang hiện tại, mặc định là trang 1 -->
                     <c:set var="totalPages" value="${(myTours.size() + itemsPerPage - 1) / itemsPerPage}" /> <!-- Tổng số trang -->
@@ -60,8 +59,7 @@
                                         <a class="h5 text-decoration-none" href="detail?tid=${t.tourId}">${t.tourName}  <span class="badge badge-danger">HOT</span></a>
                                         <div class="border-top mt-4 pt-4">
                                             <div class="d-flex justify-content-between">
-                                                <h6 class="m-0"><i class="fa fa-calendar-day text-primary mr-2"></i>${t.numberDay}<small> ngày</small></h6>
-                                                <h5 class="m-0">$${t.price}</h5>
+                                                <h5 class="m-0">${t.price} VND</h5>
                                             </div>
                                         </div>
                                     </div>

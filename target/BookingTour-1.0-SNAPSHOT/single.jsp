@@ -91,19 +91,19 @@
 
                 <div class="col-md-6">
                     <h2>${detail.tourName}</h2>
-
-                    <p><strong>Price:</strong><c:out value=" ${String.format('%.0f', detail.price)}" /> <span >VND</span></p>
+                    <p><strong>Price:</strong> <c:out value="${String.format('%.0f', detail.price)}" /> <span>VND</span></p>
                     <p><strong>Departure Date:</strong> ${detail.dateStart}</p>
                     <p><strong>Return Date:</strong> ${detail.dateEnd}</p>
                     <p><strong>Hotel:</strong> ${detail.hotelName}</p>
-                    <!--                    <p><strong>Transportation:</strong> Private bus</p>-->
-                    <!--                    <p><strong>Sales:</strong> Contact our sales representative</p>-->
                     <p><strong>Place:</strong> ${detail.placeName}</p>
-                    <p><strong>Place:</strong></p>
-
+                    <p><a href="detailGuide?gid=${detail.guideId}">
+                            <strong>Your guide:</strong> ${detail.guideName}
+                        </a></p>
                     <p>${detail.detailTour}</p>
                     <a href="#" class="btn btn-primary mt-4">Book Now</a>
                 </div>
+
+
             </div>
         </div>
 

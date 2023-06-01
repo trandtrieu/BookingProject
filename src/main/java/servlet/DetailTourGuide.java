@@ -21,15 +21,6 @@ import model.Tour;
  */
 public class DetailTourGuide extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -62,7 +53,7 @@ public class DetailTourGuide extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("gid"));
         GuideDao dao = new GuideDao();
         GuideTour g = dao.getGuideDetailByID(id);
-        request.setAttribute("detail",g );
+        request.setAttribute("detail", g);
         request.getRequestDispatcher("tourGuideDetail.jsp").forward(request, response);
     }
 
