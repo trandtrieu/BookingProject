@@ -115,6 +115,9 @@
 
                                             </div>
                                         </div>
+                                        <div class="countdown" id="countdown-${t.tourId}" style="font-size: 17px; font-weight: bold; color: #ff0000; 
+                                             text-align: center; padding: 5px; margin-top: 5px; background-color: #f2f2f2;"></div>
+
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +164,56 @@
 <!-- Packages End -->
 <%@include file="includes/footer.jsp" %>
 
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    function updateCountdown(dateStart, tourId) {
+        var countdownElement = document.getElementById('countdown-' + tourId);
+        var startDate = moment(dateStart, "YYYY-MM-DD"); // Chuyển đổi ngày bắt đầu thành đối tượng Moment
+
+        function updateTimer() {
+            var now = moment();
+            var difference = startDate.diff(now); // Tính toán khoảng thời gian còn lại (diff)
+
+            if (difference > 0) {
+                var duration = moment.duration(difference); // Chuyển đổi khoảng thời gian thành đối tượng Duration
+
+                var days = duration.days();
+                var hours = duration.hours();
+                var minutes = duration.minutes();
+                var seconds = duration.seconds();
+
+                countdownElement.innerHTML =
+                        "Còn " + days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+            } else {
+                countdownElement.innerHTML = 'Tour đã bắt đầu!';
+                clearInterval(intervalId);
+            }
+        }
+
+        // Cập nhật đếm ngược ngay lập tức
+        updateTimer();
+
+        // Cập nhật đếm ngược mỗi giây (1000 milliseconds)
+        var intervalId = setInterval(updateTimer, 1000);
+    }
+
+    function updateAllCountdowns() {
+    <c:forEach var="t" items="${myTours}">
+        updateCountdown('${t.dateStart}', '${t.tourId}');
+    </c:forEach>
+    }
+
+    // Gọi hàm updateAllCountdowns sau khi trang đã tải
+    document.addEventListener("DOMContentLoaded", function () {
+        updateAllCountdowns();
+    });
+</script>
+
+
+
+
 
 
 

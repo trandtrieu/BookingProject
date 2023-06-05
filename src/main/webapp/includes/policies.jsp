@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<div id="menu2" class="container tab-pane fade" style="padding-left: 0; padding-right: 0"><br>
+<div id="menu1" class="container tab-pane fade" style="padding-left: 0; padding-right: 0"><br>
     <div class="col-12" style="padding-left: 0; padding-right: 0" >
         <div id="accordion">
             <div class="card" >

@@ -59,11 +59,14 @@
 
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home">Lịch trình</a>
+                            <a id="menu1-tab"  class="nav-link active" data-toggle="tab" href="#home">Lịch trình</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#menu2">Điều khoản và chính sách</a>
+                            <a class="nav-link" data-toggle="tab" href="#menu1">Điều khoản và chính sách</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="menu2-tab" class="nav-link" data-toggle="tab" href="#menu2">Ðang ký tour</a>
                         </li>
                     </ul>
 
@@ -84,23 +87,77 @@
 
                         <%@include file="includes/policies.jsp" %>
 
+                        <div id="menu2" class="container tab-pane fade" style="padding-left: 0; padding-right: 0"><br>
+                            <div class="col-12" style="padding-left: 0; padding-right: 0" >
+                                <div class="container mt-4">
+                                    <h2>Đặt vé tour</h2>
+                                    <form action="BookingServlet" method="post" >
+                                        <div class="form-group">
+                                            <label for="fullName">Họ tên:</label>
+                                            <input type="text" class="form-control" id="fullName" placeholder="Nhập họ tên" value="tran Dinh trieu">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Số điện thoại:</label>
+                                            <input type="tel" class="form-control" id="phone" placeholder="Nhập số điện thoại" value="0789458707">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email:</label>
+                                            <input type="email" class="form-control" id="email" placeholder="Nhập địa chỉ email" value="trieu@gmail.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Address:</label>
+                                            <input type="address" class="form-control" id="address" placeholder="Nhập địa chỉ" value="Quang Nam">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adults">Số lượng người lớn:</label>
+                                            <input type="number" class="form-control" id="adults" name="adults" placeholder="Nhập số lượng người lớn" min="0" value="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="children">Số lượng trẻ em:</label>
+                                            <input type="number" class="form-control" id="children" name="children" placeholder="Nhập số lượng trẻ em" min="0" value="1">
+                                        </div>
 
+                                        <div class="form-group">
+                                            <label for="note">Ghi chú:</label>
+                                            <textarea class="form-control" id="note" rows="3" placeholder="Nhập ghi chú" value="hello"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Đặt vé</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
                 <div class="col-md-6">
-                    <h2>${detail.tourName}</h2>
-                    <p><strong>Price:</strong> <c:out value="${String.format('%.0f', detail.price)}" /> <span>VND</span></p>
-                    <p><strong>Departure Date:</strong> ${detail.dateStart}</p>
-                    <p><strong>Return Date:</strong> ${detail.dateEnd}</p>
-                    <p><strong>Hotel:</strong> ${detail.hotelName}</p>
-                    <p><strong>Place:</strong> ${detail.placeName}</p>
-                    <p><a href="detailGuide?gid=${detail.guideId}">
-                            <strong>Your guide:</strong> ${detail.guideName}
-                        </a></p>
-                    <p>${detail.detailTour}</p>
-                    <a href="#" class="btn btn-primary mt-4">Book Now</a>
+
+                    <div class="col-md-12"
+                         <h2>${detail.tourName}</h2>
+                        <p><strong>Price:</strong> <c:out value="${String.format('%.0f', detail.price)}" /> <span>VND</span></p>
+                        <p><strong>Departure Date:</strong> ${detail.dateStart}</p>
+                        <p><strong>Return Date:</strong> ${detail.dateEnd}</p>
+                        <p><strong>Hotel:</strong> ${detail.hotelName}</p>
+                        <p><strong>Place:</strong> ${detail.placeName}</p>
+                        <p><a href="detailGuide?gid=${detail.guideId}">
+                                <strong>Your guide:</strong> ${detail.guideName}
+                            </a></p>
+                        <p>${detail.detailTour}</p> 
+                        <a href="#" class="btn btn-primary mt-4" onclick="openRegistrationTab()">Book Now</a>
+                    </div>
+                    <div class="col-md-12 mt-5">
+                        <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Some new tours</h4>
+                        <c:forEach var="r" items="${tRelated}" varStatus="status">
+                            <div class="d-flex align-items-center text-decoration-none bg-white mb-3">
+                                <img class="img-fluid" src="img/${r.imageTour}" alt="" width="100" height="100">
+                                <div class="pl-3">
+                                    <h6 class="m-1" id="tour-${r.tourId}" onclick="redirectToDetail('${r.tourId}')" style="cursor: pointer">${r.tourName}</h6>
+                                    <small>Jan 01, 2050</small>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
 
 
@@ -147,18 +204,7 @@
                         <!-- Comment List End -->
 
                     </div>
-                    <div class="col-md-6">
-                        <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Some new tours</h4>
-                        <c:forEach var="r" items="${tRelated}" varStatus="status">
-                            <div class="d-flex align-items-center text-decoration-none bg-white mb-3">
-                                <img class="img-fluid" src="img/${r.imageTour}" alt="" width="100" height="100">
-                                <div class="pl-3">
-                                    <h6 class="m-1" id="tour-${r.tourId}" onclick="redirectToDetail('${r.tourId}')" style="cursor: pointer">${r.tourName}</h6>
-                                    <small>Jan 01, 2050</small>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -172,7 +218,17 @@
         function redirectToDetail(tourId) {
             window.location.href = "detail?tid=" + tourId;
         }
+
+
+        function openRegistrationTab() {
+            document.getElementById("menu1-tab").classList.remove("active");
+            document.getElementById("menu2-tab").classList.add("active");
+            document.getElementById("menu1").classList.remove("show", "active");
+            document.getElementById("menu2").classList.add("show", "active");
+        }
+
     </script>
+
     <%@include file="includes/foot.jsp" %>
 
 </html>

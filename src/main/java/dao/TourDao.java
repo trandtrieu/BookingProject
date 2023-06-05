@@ -157,34 +157,6 @@ public class TourDao {
         return null;
     }
 
-//    public Tour getLast() {
-////        String query = "select top 1 * from tour\n"
-////                + "order by tourId desc";
-//        String query = "SELECT top 1 *, place.placeName, hotel.hotelName\n"
-//                + "FROM tour\n"
-//                + "JOIN place ON tour.placeId = place.placeId \n"
-//                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
-//                + "order by tourId desc";
-//        try {
-//            pst = this.con.prepareStatement(query);
-//            rs = pst.executeQuery();
-//            while (rs.next()) {
-//                return new Tour(rs.getInt(1),
-//                        rs.getString(2),
-//                        rs.getFloat(3),
-//                        rs.getDate(4),
-//                        rs.getDate(5),
-//                        rs.getString(6),
-//                        rs.getString(7),
-//                        rs.getBoolean(8),
-//                        rs.getString(9),
-//                        rs.getString(10));
-//
-//            }
-//        } catch (Exception e) {
-//        }
-//        return null;
-//    }
     public List<Tour> getTop4() {
         List<Tour> list = new ArrayList<>();
         String query = "select top 4 * from tour";
@@ -192,13 +164,23 @@ public class TourDao {
             pst = this.con.prepareStatement(query);
             rs = pst.executeQuery();
             while (rs.next()) {
-                Tour tour = extractTourFromResultSet(rs);
-                list.add(tour);
+                list.add(new Tour(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getFloat(3),
+                        rs.getDate(4),
+                        rs.getDate(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getBoolean(8),
+                        rs.getString(9),
+                        rs.getString(10)));
+
             }
         } catch (SQLException e) {
         }
         return list;
     }
+
 
     public List<Tour> getToursByRegionName(String regionName) {
         String query = "SELECT *, place.placeName, hotel.hotelName "
