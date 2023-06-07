@@ -29,20 +29,11 @@ import model.Tour;
  */
 public class BookingServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -93,8 +84,9 @@ public class BookingServlet extends HttpServlet {
 
                 if (result) {
                     try {
+                        
                         EmailSender.sendConfirmationEmail(email, orderModel);
-                        request.getRequestDispatcher("OrderSuccess.jsp").forward(request, response);
+                        request.getRequestDispatcher("orderSuccess.jsp").forward(request, response);
                     } catch (MessagingException ex) {
                         // Xử lý lỗi gửi email
                         ex.printStackTrace();
@@ -103,7 +95,6 @@ public class BookingServlet extends HttpServlet {
                 } else {
                     response.getWriter().println("Order failed");
                 }
-
                 return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);

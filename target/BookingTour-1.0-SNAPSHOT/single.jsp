@@ -113,11 +113,11 @@
                             <form action="BookingServlet" method="post" >
                                 <div class="form-group">
                                     <label for="fullName">Họ tên:</label>
-                                    <input type="text" name="fullName" class="form-control" id="fullName" placeholder="Nhập họ tên" value="" required>
+                                    <input type="text" name="fullName" class="form-control" id="fullName" placeholder="Nhập họ tên" value="" minlength="3"  required>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Số điện thoại:</label> 
-                                    <input type="tel" class="form-control"  name="phone" id="phone" placeholder="Nhập số điện thoại" value="" required>
+                                    <input type="number" class="form-control"  name="phone" id="phone" pattern="[-+]?[0-9]" placeholder="Nhập số điện thoại" minlength="10" maxlength="10" value="" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email:</label>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="adults">Số lượng người lớn:</label>
-                                    <input type="number" class="form-control" id="adults" name="adults" placeholder="Nhập số lượng người lớn" min="0" value="1">
+                                    <input type="number" class="form-control" id="adults" name="adults" placeholder="Nhập số lượng người lớn" min="1" value="1">
                                 </div>
                                 <div class="form-group">
                                     <label for="children">Số lượng trẻ em:</label>
@@ -140,26 +140,7 @@
                                     <label for="note">Ghi chú:</label>
                                     <textarea class="form-control" id="note" name="note" rows="3" placeholder="Nhập ghi chú" value="hello" required></textarea>
                                 </div>
-                                <div class="form-group">
 
-                                    <select name="calc_shipping_provinces" required="">
-
-                                        <option value="">Tỉnh / Thành phố</option>
-
-                                    </select>
-
-                                    <select name="calc_shipping_district" required="">
-
-                                        <option value="">Quận / Huyện</option>
-
-                                    </select>
-                                </div>
-
-                                <input class="billing_address_1" name="" type="hidden" value="">
-
-                                <input class="billing_address_2" name="" type="hidden" value="">
-                                <input class="billing_address_1" name="" type="hidden" value="">
-                                <input class="billing_address_2" name="" type="hidden" value="">
 
 
                                 <input type="hidden" name="id" value="${detail.tourId}">

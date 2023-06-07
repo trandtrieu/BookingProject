@@ -64,7 +64,13 @@ public class LoginServlet extends HttpServlet {
             }
             response.addCookie(u);
             response.addCookie(p);
-
+            System.out.println(acc.getRole());
+            
+            if(acc.getRole() == 1){
+                System.out.println("alo1");
+                response.sendRedirect("admin.jsp");
+                return;
+            }
             response.sendRedirect("HomeController");
         }
     }

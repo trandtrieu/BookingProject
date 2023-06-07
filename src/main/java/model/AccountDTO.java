@@ -12,7 +12,7 @@ public class AccountDTO {
 
     private int id;
     private String username, password, email, phone;
-    private int isAdmin;
+    private int role;
 
     public AccountDTO() {
     }
@@ -27,24 +27,30 @@ public class AccountDTO {
         this.username = username;
         this.password = password;
     }
+
+    public AccountDTO(String username, String password, int role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
     
     
 
-    public AccountDTO(int id, String username, String password, String email, String phone, int isAdmin) {
+    public AccountDTO(int id, String username, String password, String email, String phone, int role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.isAdmin = isAdmin;
+        this.role = role;
     }
 
-    public AccountDTO(String username, String password, String email, String phone, int isAdmin) {
+    public AccountDTO(String username, String password, String email, String phone, int role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.isAdmin = isAdmin;
+        this.role = role;
     }
 
     public int getId() {
@@ -87,12 +93,13 @@ public class AccountDTO {
         this.phone = phone;
     }
 
-    public int getIsAdmin() {
-        return isAdmin;
+    public int getRole() {
+        return role;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setRole(int role) {
+        this.role = role;
     }
 
+   
 }

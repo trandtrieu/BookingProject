@@ -17,7 +17,7 @@
         <%@include file="includes/topbar.jsp" %>
 
         <div class="container">
-            <table class="table table-light mt-5">
+            <table class="table  table-bordered mt-5">
 
                 <thead class="table-dark">
                     <tr class="text-light ">

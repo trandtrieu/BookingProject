@@ -21,7 +21,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            TourDao t = new TourDao(DbCon.getConnection q   ());
+            TourDao t = new TourDao(DbCon.getConnection());
             RegionDao r = new RegionDao(DbCon.getConnection());
 
             List<Tour> tours = t.getAllTours();
