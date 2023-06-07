@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
@@ -64,7 +65,7 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(u);
             response.addCookie(p);
 
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("HomeController");
         }
     }
 }

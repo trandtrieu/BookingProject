@@ -68,8 +68,18 @@
                             <div class="navbar-nav ml-auto py-0">
                                 <a href="HomeController" class="nav-item nav-link">Trang chủ</a>
                                 <a href="AboutServlet" class="nav-item nav-link">Giới thiệu</a>
-                                <a href="tourList.jsp" class="nav-item nav-link">Gói Tour</a>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Gói tour</a>
+                                    <div class="dropdown-menu border-0 rounded-0 m-0">
+                                        <c:forEach var="r" items="${myRegions}" varStatus="status">
+                                            <a href="regionList?rid=${r.regionId}" class="dropdown-item">${r.regionName}</a>
+                                        </c:forEach>
+                                    </div>
+                                </div>
                                 <a href="#footerContact" class="nav-item nav-link">Liên hệ</a>
+                                <c:if test="${sessionScope.acc != null}">
+                                    <a href="OrderListServlet" class="nav-item nav-link">Order</a>
+                                </c:if>
                                 <c:if test="${sessionScope.acc == null}">
                                     <a href="Login" class="nav-item nav-link">Đăng nhập</a>
                                 </c:if>

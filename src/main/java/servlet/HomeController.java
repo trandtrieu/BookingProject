@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Region;
-import model.RegionDao;
+import dao.RegionDao;
 import model.Tour;
 
 public class HomeController extends HttpServlet {
@@ -21,7 +21,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            TourDao t = new TourDao(DbCon.getConnection());
+            TourDao t = new TourDao(DbCon.getConnection q   ());
             RegionDao r = new RegionDao(DbCon.getConnection());
 
             List<Tour> tours = t.getAllTours();

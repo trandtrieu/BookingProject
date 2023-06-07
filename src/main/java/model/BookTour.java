@@ -8,7 +8,8 @@ package model;
  *
  * @author DELL
  */
-public class BookTour {
+public class BookTour extends Tour {
+
     private int orderId;
     private int user_id;
     private String phone;
@@ -18,21 +19,10 @@ public class BookTour {
     private int quantityAd;
     private int quantityChildren;
     private String date;
-    private String name; 
-    public BookTour() {
-    }
+    private String name;
+    private float totalAmount;
 
-    public BookTour(int orderId, int user_id, String phone, String email, String address, String note, int quantityAd, int quantityChildren, String date, String name) {
-        this.orderId = orderId;
-        this.user_id = user_id;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.note = note;
-        this.quantityAd = quantityAd;
-        this.quantityChildren = quantityChildren;
-        this.date = date;
-        this.name = name;
+    public BookTour() {
     }
 
     public BookTour(int user_id, String phone, String email, String address, String note, int quantityAd, int quantityChildren, String date, String name) {
@@ -45,6 +35,20 @@ public class BookTour {
         this.quantityChildren = quantityChildren;
         this.date = date;
         this.name = name;
+    }
+
+    public BookTour(int orderId, int user_id, String phone, String email, String address, String note, int quantityAd, int quantityChildren, String date, String name, float totalAmount) {
+        this.orderId = orderId;
+        this.user_id = user_id;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.note = note;
+        this.quantityAd = quantityAd;
+        this.quantityChildren = quantityChildren;
+        this.date = date;
+        this.name = name;
+        this.totalAmount = totalAmount;
     }
 
     public int getOrderId() {
@@ -127,7 +131,12 @@ public class BookTour {
         this.name = name;
     }
 
+    public float getTotalAmount() {
+        return totalAmount;
+    }
 
+    public void setTotalAmount(float totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
-    
 }

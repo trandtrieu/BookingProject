@@ -181,7 +181,6 @@ public class TourDao {
         return list;
     }
 
-
     public List<Tour> getToursByRegionName(String regionName) {
         String query = "SELECT *, place.placeName, hotel.hotelName "
                 + "FROM tour "
@@ -281,4 +280,31 @@ public class TourDao {
         return tours;
     }
 
+    public Tour getSingleTour(int id) {
+        Tour row = null;
+        try {
+            query = "select * from tour where tourId=? ";
+
+            pst = this.con.prepareStatement(query);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                row = new Tour();
+                row.setTourId(rs.getInt("tourId"));
+                row.setTourName(rs.getString("name"));
+                row.setDateStart(rs.getDate("dateStart"));
+                row.setDateEnd(rs.getDate("dateEnd"));
+                row.setImageTour(rs.getString("image"));
+//                row.setGuideName(rs.getString("guideName"));
+                row.setPrice(rs.getFloat("price"));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+        return row;
+    }
 }

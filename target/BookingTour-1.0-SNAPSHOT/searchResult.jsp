@@ -59,7 +59,7 @@
 
                                     <div class="border-top mt-4 pt-4">
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="m-0">${t.price} VND</h5>
+                                            <h5 class="m-0"><c:out value="${String.format('%.0f', t.price)}" /> VND</h5>
                                         </div>
                                     </div>
                                 </div>

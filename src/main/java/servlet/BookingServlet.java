@@ -6,17 +6,22 @@ package servlet;
 
 import connection.DbCon;
 import dao.OrderDao;
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.AccountDTO;
 import model.BookTour;
+import model.EmailSender;
+import model.Tour;
 
 /**
  *
@@ -50,62 +55,66 @@ public class BookingServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        response.setCharacterEncoding("utf-8");
+        request.setCharacterEncoding("utf-8");
+
         String fullName = request.getParameter("fullName");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
+        String address = request.getParameter("address");
         int adults = Integer.parseInt(request.getParameter("adults"));
         int children = Integer.parseInt(request.getParameter("children"));
         String note = request.getParameter("note");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
 
-        HttpSession session = request.getSession();
-        AccountDTO loggedInUser = (AccountDTO) session.getAttribute("acc");
-        if (loggedInUser != null) {
-            BookTour order = new BookTour();
-            order.setId(getId());
-            order.setUser_id(loggedInUser.getId());
-            order.setQuantity(c.getQuantity());
-            order.setDate(formatter.format(date));
-            order.setCusName(o_cusName);
-            order.setAddress(o_address);
-            order.setPhone(o_phone);
-            order.setEmail(o_email);
+        AccountDTO acc = (AccountDTO) request.getSession().getAttribute("acc");
 
-            OrderDao oDao = new OrderDao(DbCon.getConnection());
-            boolean result = oDao.insertOrder(order);
-            if (!result) {
-                break;
-            }
-            return;
-        } else {
-            if (loggedInUser == null) {
-                // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                response.sendRedirect("Login");
+        if (acc != null) {
+            try {
+                request.setAttribute("acc", acc);
+                String tourId = request.getParameter("id");
+                BookTour orderModel = new BookTour();
+                orderModel.setOrderId(Integer.parseInt(tourId));
+                orderModel.setUser_id(acc.getId());
+                orderModel.setQuantityAd(adults);
+                orderModel.setQuantityChildren(children);
+                orderModel.setAddress(address);
+                orderModel.setName(fullName);
+                orderModel.setPhone(phone);
+                orderModel.setEmail(email);
+                orderModel.setNote(note);
+                orderModel.setDate(formatter.format(date));
+                OrderDao orderDao = new OrderDao(DbCon.getConnection());
+                boolean result = orderDao.insertOrder(orderModel);
+
+                if (result) {
+                    try {
+                        EmailSender.sendConfirmationEmail(email, orderModel);
+                        request.getRequestDispatcher("OrderSuccess.jsp").forward(request, response);
+                    } catch (MessagingException ex) {
+                        // Xử lý lỗi gửi email
+                        ex.printStackTrace();
+                        response.getWriter().println("Failed to send confirmation email");
+                    }
+                } else {
+                    response.getWriter().println("Order failed");
+                }
+
                 return;
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            response.sendRedirect("index.jsp"); // Chuyển hướng đến trang thành công
-
+        } else {
+            // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            response.sendRedirect("Login");
+            return;
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

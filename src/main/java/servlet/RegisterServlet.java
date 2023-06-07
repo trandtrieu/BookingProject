@@ -18,7 +18,6 @@ import model.AccountDTO;
  */
 public class RegisterServlet extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,22 +26,22 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String re_pass = request.getParameter("re_pass");
-        
-        if(!pass.equals(re_pass)){
+
+        if (!pass.equals(re_pass)) {
             response.sendRedirect("login.jsp");
-        }else{
-             AccountDAO dao = new AccountDAO();
-             AccountDTO a = AccountDAO.checkAccountExist(user);
-             if(a == null){
-                 dao.register(user, pass,email,phone);
-                 response.sendRedirect("index.jsp");
-             }else{
-                 response.sendRedirect("login.jsp");
-             }
+        } else {
+            AccountDAO dao = new AccountDAO();
+            AccountDTO a = AccountDAO.checkAccountExist(user);
+            if (a == null) {
+                dao.register(user, pass, email, phone);
+                response.sendRedirect("index.jsp");
+            } else {
+                response.sendRedirect("login.jsp");
+            }
         }
-        
-        
+
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

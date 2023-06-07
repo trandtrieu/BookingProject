@@ -20,6 +20,17 @@ public class AccountDAO {
     static Connection conn;
     static PreparedStatement ps;
     static ResultSet rs;
+    private Connection con;
+
+    private String query;
+    private PreparedStatement pst;
+
+    public AccountDAO(Connection con) {
+        this.con = con;
+    }
+
+    public AccountDAO() {
+    }
 
     public ArrayList<AccountDTO> getListAccounts() {
         try {
@@ -29,7 +40,7 @@ public class AccountDAO {
             rs = ps.executeQuery();
             ArrayList<AccountDTO> list = new ArrayList<>();
             while (rs.next()) {
-                AccountDTO a = new AccountDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6));
+                AccountDTO a = new AccountDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
                 list.add(a);
             }
             return list;
@@ -40,24 +51,31 @@ public class AccountDAO {
     }
 
     public AccountDTO login(String username, String password) {
+        AccountDTO acc = null;
         try {
             String query = " select * from account \n"
                     + "where username =? and password =?";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
+
             ps.setString(1, username);
             ps.setString(2, password);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                AccountDTO acc = new AccountDTO(rs.getString(2), rs.getString(3));
+//            while (rs.next()) {
+//                AccountDTO acc = new AccountDTO(rs.getInt(1), rs.getString(2), rs.getString(3));
+//                return acc;
+//            }
+            if (rs.next()) {
+                acc = new AccountDTO();
+                acc.setId(rs.getInt("id"));
+                acc.setUsername(rs.getString("username"));
+                acc.setPassword(rs.getString("password"));
                 return acc;
             }
         } catch (Exception e) {
         }
         return null;
     }
-
-
 
     public static AccountDTO checkAccountExist(String username) {
         try {
@@ -68,18 +86,18 @@ public class AccountDAO {
             ps.setString(1, username);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return new AccountDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6));
+                return new AccountDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return null;
     }
-    
+
     public void register(String username, String pass, String email, String phone) {
         try {
             String query = "insert into account\n"
-                            + "values(?,?,?,?,0)";
+                    + "values(?,?,?,?,0)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, username);

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.BookTour;
 import model.Tour;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -35,23 +36,27 @@ public class OrderDao {
     public boolean insertOrder(BookTour model) {
         boolean result = false;
         try {
-            query = "insert into orders(p_id, u_id, o_quantity, o_date, o_cusName, o_address, o_phone, o_email) values(?,?,?,?,?,?,?,?)";
+            query = "insert into bookTour(t_id, u_id, book_date, book_cusName, book_address, book_phone,\n"
+                    + "book_email, book_quantityAd, book_quantityChild, note, total_amount)\n"
+                    + "values(?,?,?,?,?,?,?,?,?,?,?)";
             pst = this.con.prepareStatement(query);
             pst.setInt(1, model.getOrderId());
             pst.setInt(2, model.getUser_id());
-            pst.setInt(3, model.getQuantityAd());
-            pst.setInt(4, model.getQuantityChildren());
-            pst.setString(5, model.getDate());
-            pst.setString(6, model.getAddress());
-            pst.setString(7, model.getName());
-            pst.setString(8, model.getPhone());
-            pst.setString(9, model.getEmail());
+            pst.setString(3, model.getDate());
+            pst.setString(4, model.getName());
+            pst.setString(5, model.getAddress());
+            pst.setString(6, model.getPhone());
+            pst.setString(7, model.getEmail());
+            pst.setInt(8, model.getQuantityAd());
+            pst.setInt(9, model.getQuantityChildren());
             pst.setString(10, model.getNote());
+            pst.setFloat(11, model.getTotalAmount());
 
             pst.executeUpdate();
             result = true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            result = false;
         }
         return result;
     }
@@ -59,26 +64,34 @@ public class OrderDao {
     public List<BookTour> userOrders(int id) {
         List<BookTour> list = new ArrayList<>();
         try {
-            query = "select * from orders where u_id=? order by orders.o_id desc";
+            query = "select * from bookTour where u_id=? order by bookTour.t_id desc";
             pst = this.con.prepareStatement(query);
             pst.setInt(1, id);
             rs = pst.executeQuery();
             while (rs.next()) {
                 BookTour order = new BookTour();
                 TourDao tourDao = new TourDao(this.con);
-                int pId = rs.getInt("t_id");
-                Tour tour = TourDao.getTourByID("t_id");
+                int tId = rs.getInt("t_id");
+                Tour tour = tourDao.getSingleTour(tId);
                 order.setOrderId(rs.getInt("o_id"));
-                order.setId(pId);
-                order.setName(product.getName());
-                order.setCategory(product.getCategory());
-                order.setPrice(product.getPrice() * rs.getInt("o_quantity"));
-                order.setQuantity(rs.getInt("o_quantity"));
-                order.setDate(rs.getString("o_date"));
-                order.setAddress(rs.getString("o_address"));
-                order.setCusName(rs.getString("o_cusName"));
-                order.setPhone(rs.getString("o_phone"));
-                order.setEmail(rs.getString("o_email"));
+                order.setTourId(tId);
+                order.setTourName(tour.getTourName());
+                order.setDateStart(tour.getDateStart());
+                order.setPrice(tour.getPrice() * rs.getInt("book_quantityAd"));
+                order.setQuantityAd(rs.getInt("book_quantityChild"));
+                order.setQuantityChildren(rs.getInt("book_quantityChild"));
+                order.setDate(rs.getString("book_date"));
+                order.setAddress(rs.getString("book_address"));
+                order.setName(rs.getString("book_cusName"));
+                order.setNote(rs.getString("note"));
+                order.setEmail(rs.getString("book_email"));
+                order.setPhone(rs.getString("book_phone"));
+
+                // Calculate and set the total amount
+                float adultPrice = order.getPrice();
+                float childrenPrice = adultPrice / 2;
+                float totalAmount = (adultPrice * order.getQuantityAd()) + (childrenPrice * order.getQuantityChildren());
+                order.setTotalAmount(totalAmount);
 
                 list.add(order);
             }

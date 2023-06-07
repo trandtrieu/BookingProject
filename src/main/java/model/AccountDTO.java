@@ -9,18 +9,28 @@ package model;
  * @author Hi
  */
 public class AccountDTO {
-    private String id, username, password, email, phone;
+
+    private int id;
+    private String username, password, email, phone;
     private int isAdmin;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(String userName, String password){
+    public AccountDTO(String userName, String password) {
         this.username = userName;
         this.password = password;
     }
+
+    public AccountDTO(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
     
-    public AccountDTO(String id, String username, String password, String email, String phone ,int isAdmin) {
+    
+
+    public AccountDTO(int id, String username, String password, String email, String phone, int isAdmin) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -29,11 +39,19 @@ public class AccountDTO {
         this.isAdmin = isAdmin;
     }
 
-    public String getId() {
+    public AccountDTO(String username, String password, String email, String phone, int isAdmin) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.isAdmin = isAdmin;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -68,7 +86,7 @@ public class AccountDTO {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     public int getIsAdmin() {
         return isAdmin;
     }
@@ -77,12 +95,4 @@ public class AccountDTO {
         this.isAdmin = isAdmin;
     }
 
-    @Override
-    public String toString() {
-        return "AccountDTO{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", isAdmin=" + isAdmin + '}';
-    }
-    
-    
-    
-    
 }

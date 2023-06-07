@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.GuideTour;
 import model.Region;
-import model.RegionDao;
+import dao.RegionDao;
 import model.Tour;
 
 /**

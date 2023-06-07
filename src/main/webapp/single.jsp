@@ -87,46 +87,7 @@
 
                         <%@include file="includes/policies.jsp" %>
 
-                        <div id="menu2" class="container tab-pane fade" style="padding-left: 0; padding-right: 0"><br>
-                            <div class="col-12" style="padding-left: 0; padding-right: 0" >
-                                <div class="container mt-4">
-                                    <h2>Đặt vé tour</h2>
-                                    <form action="BookingServlet" method="post" >
-                                        <div class="form-group">
-                                            <label for="fullName">Họ tên:</label>
-                                            <input type="text" class="form-control" id="fullName" placeholder="Nhập họ tên" value="tran Dinh trieu">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phone">Số điện thoại:</label>
-                                            <input type="tel" class="form-control" id="phone" placeholder="Nhập số điện thoại" value="0789458707">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email:</label>
-                                            <input type="email" class="form-control" id="email" placeholder="Nhập địa chỉ email" value="trieu@gmail.com">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="address">Address:</label>
-                                            <input type="address" class="form-control" id="address" placeholder="Nhập địa chỉ" value="Quang Nam">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="adults">Số lượng người lớn:</label>
-                                            <input type="number" class="form-control" id="adults" name="adults" placeholder="Nhập số lượng người lớn" min="0" value="1">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="children">Số lượng trẻ em:</label>
-                                            <input type="number" class="form-control" id="children" name="children" placeholder="Nhập số lượng trẻ em" min="0" value="1">
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="note">Ghi chú:</label>
-                                            <textarea class="form-control" id="note" rows="3" placeholder="Nhập ghi chú" value="hello"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Đặt vé</button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -144,88 +105,241 @@
                                 <strong>Your guide:</strong> ${detail.guideName}
                             </a></p>
                         <p>${detail.detailTour}</p> 
-                        <a href="#" class="btn btn-primary mt-4" onclick="openRegistrationTab()">Book Now</a>
-                    </div>
-                    <div class="col-md-12 mt-5">
-                        <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Some new tours</h4>
-                        <c:forEach var="r" items="${tRelated}" varStatus="status">
-                            <div class="d-flex align-items-center text-decoration-none bg-white mb-3">
-                                <img class="img-fluid" src="img/${r.imageTour}" alt="" width="100" height="100">
-                                <div class="pl-3">
-                                    <h6 class="m-1" id="tour-${r.tourId}" onclick="redirectToDetail('${r.tourId}')" style="cursor: pointer">${r.tourName}</h6>
-                                    <small>Jan 01, 2050</small>
+
+
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Book Now</button>
+
+                        <div id="demo" class="collapse mt-3" >
+                            <form action="BookingServlet" method="post" >
+                                <div class="form-group">
+                                    <label for="fullName">Họ tên:</label>
+                                    <input type="text" name="fullName" class="form-control" id="fullName" placeholder="Nhập họ tên" value="" required>
                                 </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-
-        <div class="container-fluid py-5">
-            <div class="container py-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- Comment List Start -->
-                        <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
-                            <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Comments</h4>
-                            <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                <div class="media-body">
-                                    <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                                    <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                        accusam ipsum et no at. </p>
-                                    <button class="btn btn-sm btn-outline-primary">Reply</button>
+                                <div class="form-group">
+                                    <label for="phone">Số điện thoại:</label> 
+                                    <input type="tel" class="form-control"  name="phone" id="phone" placeholder="Nhập số điện thoại" value="" required>
                                 </div>
-                            </div>
-                            <div class="media">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                <div class="media-body">
-                                    <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                                    <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                        accusam ipsum et no at. </p>
-                                    <button class="btn btn-sm btn-outline-primary">Reply</button>
-                                    <div class="media mt-4">
-                                        <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                             style="width: 45px;">
-                                        <div class="media-body">
-                                            <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                                            <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor
-                                                labore accusam ipsum et no at. </p>
-                                            <button class="btn btn-sm btn-outline-primary">Reply</button>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Nhập địa chỉ email" value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <input type="address" class="form-control" name="address" id="address" placeholder="Nhập địa chỉ" value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adults">Số lượng người lớn:</label>
+                                    <input type="number" class="form-control" id="adults" name="adults" placeholder="Nhập số lượng người lớn" min="0" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="children">Số lượng trẻ em:</label>
+                                    <input type="number" class="form-control" id="children" name="children" placeholder="Nhập số lượng trẻ em" min="0" value="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="note">Ghi chú:</label>
+                                    <textarea class="form-control" id="note" name="note" rows="3" placeholder="Nhập ghi chú" value="hello" required></textarea>
+                                </div>
+                                <div class="form-group">
+
+                                    <select name="calc_shipping_provinces" required="">
+
+                                        <option value="">Tỉnh / Thành phố</option>
+
+                                    </select>
+
+                                    <select name="calc_shipping_district" required="">
+
+                                        <option value="">Quận / Huyện</option>
+
+                                    </select>
+                                </div>
+
+                                <input class="billing_address_1" name="" type="hidden" value="">
+
+                                <input class="billing_address_2" name="" type="hidden" value="">
+                                <input class="billing_address_1" name="" type="hidden" value="">
+                                <input class="billing_address_2" name="" type="hidden" value="">
+
+
+                                <input type="hidden" name="id" value="${detail.tourId}">
+                                <button type="submit" class="btn btn-primary">Đặt vé</button>
+                            </form>
+                        </div>
+                        <div class="col-md-12 mt-5">
+                            <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Some new tours</h4>
+                            <c:forEach var="r" items="${tRelated}" varStatus="status">
+                                <div class="d-flex align-items-center text-decoration-none bg-white mb-3">
+                                    <img class="img-fluid" src="img/${r.imageTour}" alt="" width="100" height="100">
+                                    <div class="pl-3">
+                                        <h6 class="m-1" id="tour-${r.tourId}" onclick="redirectToDetail('${r.tourId}')" style="cursor: pointer">${r.tourName}</h6>
+                                        <small>Jan 01, 2050</small>
                                     </div>
                                 </div>
-                            </div>
-
+                            </c:forEach>
                         </div>
-                        <!-- Comment List End -->
-
                     </div>
+
 
                 </div>
             </div>
-        </div>
 
-        <!-- Blog End -->
 
-        <%@include file="includes/footer.jsp" %>
+
+            <!-- Blog End -->
+
+            <%@include file="includes/footer.jsp" %>
 
     </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://web8802.com/wp-content/themes/hienads/assets/js/quanhuyen.js"></script>
     <script>
-        function redirectToDetail(tourId) {
-            window.location.href = "detail?tid=" + tourId;
-        }
+                                            if (address_2 = localStorage.getItem('address_2_saved')) {
+
+                                                $('select[name="calc_shipping_district"] option').each(function () {
+
+                                                    if ($(this).text() == address_2) {
+
+                                                        $(this).attr('selected', '')
+
+                                                    }
+
+                                                })
+
+                                                $('input.billing_address_2').attr('value', address_2)
+
+                                            }
+
+                                            if (district = localStorage.getItem('district')) {
+
+                                                $('select[name="calc_shipping_district"]').html(district)
+
+                                                $('select[name="calc_shipping_district"]').on('change', function () {
+
+                                                    var target = $(this).children('option:selected')
+
+                                                    target.attr('selected', '')
+
+                                                    $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+
+                                                    address_2 = target.text()
+
+                                                    $('input.billing_address_2').attr('value', address_2)
+
+                                                    district = $('select[name="calc_shipping_district"]').html()
+
+                                                    localStorage.setItem('district', district)
+
+                                                    localStorage.setItem('address_2_saved', address_2)
+
+                                                })
+
+                                            }
+
+                                            $('select[name="calc_shipping_provinces"]').each(function () {
+
+                                                var $this = $(this),
+                                                        stc = ''
+
+                                                c.forEach(function (i, e) {
+
+                                                    e += +1
+
+                                                    stc += '<option value=' + e + '>' + i + '</option>'
+
+                                                    $this.html('<option value="">Tỉnh / Thành phố</option>' + stc)
+
+                                                    if (address_1 = localStorage.getItem('address_1_saved')) {
+
+                                                        $('select[name="calc_shipping_provinces"] option').each(function () {
+
+                                                            if ($(this).text() == address_1) {
+
+                                                                $(this).attr('selected', '')
+
+                                                            }
+
+                                                        })
+
+                                                        $('input.billing_address_1').attr('value', address_1)
+
+                                                    }
+
+                                                    $this.on('change', function (i) {
+
+                                                        i = $this.children('option:selected').index() - 1
+
+                                                        var str = '',
+                                                                r = $this.val()
+
+                                                        if (r != '') {
+
+                                                            arr[i].forEach(function (el) {
+
+                                                                str += '<option value="' + el + '">' + el + '</option>'
+
+                                                                $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>' + str)
+
+                                                            })
+
+                                                            var address_1 = $this.children('option:selected').text()
+
+                                                            var district = $('select[name="calc_shipping_district"]').html()
+
+                                                            localStorage.setItem('address_1_saved', address_1)
+
+                                                            localStorage.setItem('district', district)
+
+                                                            $('select[name="calc_shipping_district"]').on('change', function () {
+
+                                                                var target = $(this).children('option:selected')
+
+                                                                target.attr('selected', '')
+
+                                                                $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+
+                                                                var address_2 = target.text()
+
+                                                                $('input.billing_address_2').attr('value', address_2)
+
+                                                                district = $('select[name="calc_shipping_district"]').html()
+
+                                                                localStorage.setItem('district', district)
+
+                                                                localStorage.setItem('address_2_saved', address_2)
+
+                                                            })
+
+                                                        } else {
+
+                                                            $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>')
+
+                                                            district = $('select[name="calc_shipping_district"]').html()
+
+                                                            localStorage.setItem('district', district)
+
+                                                            localStorage.removeItem('address_1_saved', address_1)
+
+                                                        }
+
+                                                    })
+
+                                                })
+
+                                            })
 
 
-        function openRegistrationTab() {
-            document.getElementById("menu1-tab").classList.remove("active");
-            document.getElementById("menu2-tab").classList.add("active");
-            document.getElementById("menu1").classList.remove("show", "active");
-            document.getElementById("menu2").classList.add("show", "active");
-        }
+                                            function redirectToDetail(tourId) {
+                                                window.location.href = "detail?tid=" + tourId;
+                                            }
+
+
+                                            function openRegistrationTab() {
+                                                document.getElementById("menu1-tab").classList.remove("active");
+                                                document.getElementById("menu2-tab").classList.add("active");
+                                                document.getElementById("menu1").classList.remove("show", "active");
+                                                document.getElementById("menu2").classList.add("show", "active");
+                                            }
 
     </script>
 

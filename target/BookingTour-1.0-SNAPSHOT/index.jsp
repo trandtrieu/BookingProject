@@ -23,8 +23,6 @@
         <%@include file="includes/search.jsp" %>
 
         <div id="demo" class="carousel slide" data-ride="carousel">
-
-
             <ul class="carousel-indicators">
                 <li data-target="#demo" data-slide-to="0" class="active"></li>
                 <li data-target="#demo" data-slide-to="1"></li>

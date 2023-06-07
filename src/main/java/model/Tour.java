@@ -57,6 +57,10 @@ public class Tour {
         this.hotelName = hotelName;
     }
 
+    public Tour(int tourId) {
+        this.tourId = tourId;
+    }
+
     public String getGuideName() {
         return guideName;
     }
