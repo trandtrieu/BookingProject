@@ -17,6 +17,12 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
+    public AccountDTO(String username, String password, int role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
     public AccountDTO(String userName, String password) {
         this.username = userName;
         this.password = password;
@@ -27,14 +33,6 @@ public class AccountDTO {
         this.username = username;
         this.password = password;
     }
-
-    public AccountDTO(String username, String password, int role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
-    
-    
 
     public AccountDTO(int id, String username, String password, String email, String phone, int role) {
         this.id = id;
@@ -101,5 +99,4 @@ public class AccountDTO {
         this.role = role;
     }
 
-   
 }

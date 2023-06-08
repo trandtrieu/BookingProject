@@ -46,3 +46,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: #ffffff;
     text-decoration: none;
 }
+
+.img-fixed-size {
+    width: 300px; /* Định rõ chiều rộng */
+    height: 200px; /* Định rõ chiều cao */
+}

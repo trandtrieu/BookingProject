@@ -5,6 +5,9 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +18,14 @@
 
     </head>
     <style>
-
+        .img-fixed-size {
+            width: 100%;
+            height: 250px; /* Định rõ chiều cao */
+        }
+        .link-margin {
+            font-size: 1px;
+            height: 35px;
+        }
     </style>
     <body>
         <%@include file="includes/topbar.jsp" %>
@@ -84,7 +94,7 @@
                         <c:if test="${status.index >= (currentPage - 1) * itemsPerPage && status.index < currentPage * itemsPerPage}">
                             <div class="col-lg-4 col-md-6 mb-4" >
                                 <div class="package-item bg-white mb-2">
-                                    <img class="img-fluid" src="img/${t.imageTour}" alt="">
+                                    <img class="img-fluid img-fixed-size" src="img/${t.imageTour}" alt="">
                                     <div class="p-4">
                                         <div class="d-flex justify-content-between mb-3">
                                             <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>${t.placeName}                                            
@@ -98,22 +108,23 @@
                                         </div>
 
                                         <div class="d-flex justify-content-between mb-3">
-                                            <small class="m-0"><i class="fa fa-hotel text-primary mr-2"></i>${t.hotelName}</small>
+<!--                                            <small class="m-0"><i class="fa fa-hotel text-primary mr-2"></i>${t.hotelName}</small>-->
                                             <small class="m-0"><i class="fa fa-map text-primary mr-2"></i>${t.regionName}</small>
 
 
                                         </div>
-
-                                        <a class="h5 text-decoration-none" href="detail?tid=${t.tourId}">${t.tourName}  <span class="badge badge-danger">HOT</span></a>
-
+                                        <div  class= "link-margin text-center">
+                                            <a class="h5 text-decoration-none " href="detail?tid=${t.tourId}">${t.tourName}</a>
+                                        </div>
                                         <div class="border-top mt-4 pt-4">
                                             <div class="d-flex justify-content-between">
                                                 <h6 class="m-0"><i class="fa fa-calendar-day text-primary mr-2"></i>${t.numberDay}<small> ngày</small></h6>
-                                                <h5 class="m-0"><c:out value="${String.format('%.0f', t.price)}" /> VND</h5>
+                                                <h5 class="m-0"><fmt:formatNumber value="${t.price}" pattern="#,##0" /> VND</h5>
+
 
                                             </div>
                                         </div>
-                                        <div class="countdown" id="countdown-${t.tourId}" style="font-size: 17px; font-weight: bold; color: #ff0000; 
+                                        <div class="countdown" id="countdown-${t.tourId}" style="font-size: 17px; font-weight: bold; color: #ff0000;
                                              text-align: center; padding: 5px; margin-top: 5px; background-color: #f2f2f2;"></div>
 
                                     </div>
@@ -207,6 +218,11 @@
     document.addEventListener("DOMContentLoaded", function () {
         updateAllCountdowns();
     });
+    
+    
+
+
+
 </script>
 
 

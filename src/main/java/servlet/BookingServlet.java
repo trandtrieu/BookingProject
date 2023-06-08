@@ -6,6 +6,7 @@ package servlet;
 
 import connection.DbCon;
 import dao.OrderDao;
+import dao.TourDao;
 import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,19 +17,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.AccountDTO;
 import model.BookTour;
 import model.EmailSender;
 import model.Tour;
+import model.TourSchedule;
 
 /**
  *
  * @author DELL
  */
 public class BookingServlet extends HttpServlet {
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,7 +50,6 @@ public class BookingServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
 
@@ -79,19 +80,23 @@ public class BookingServlet extends HttpServlet {
                 orderModel.setEmail(email);
                 orderModel.setNote(note);
                 orderModel.setDate(formatter.format(date));
+
+                // Calculate and set the total amount
+                TourDao tourDao = new TourDao(DbCon.getConnection());
+                int tId = Integer.parseInt(tourId);
+                Tour tour = tourDao.getSingleTour(tId);
+                float adultPrice = tour.getPrice();
+                float childrenPrice = adultPrice / 2;
+                float totalAmount = (adultPrice * adults) + (childrenPrice * children);
+                orderModel.setTotalAmount(totalAmount);
+
+                // Insert the order into the database
                 OrderDao orderDao = new OrderDao(DbCon.getConnection());
                 boolean result = orderDao.insertOrder(orderModel);
 
                 if (result) {
-                    try {
-                        
-                        EmailSender.sendConfirmationEmail(email, orderModel);
-                        request.getRequestDispatcher("orderSuccess.jsp").forward(request, response);
-                    } catch (MessagingException ex) {
-                        // Xử lý lỗi gửi email
-                        ex.printStackTrace();
-                        response.getWriter().println("Failed to send confirmation email");
-                    }
+                    EmailSender.sendConfirmationEmail(email, orderModel, tour);
+                    request.getRequestDispatcher("orderSuccess.jsp").forward(request, response);
                 } else {
                     response.getWriter().println("Order failed");
                 }
@@ -99,6 +104,8 @@ public class BookingServlet extends HttpServlet {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
+                Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MessagingException ex) {
                 Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {

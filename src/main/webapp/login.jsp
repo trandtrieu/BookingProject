@@ -37,12 +37,12 @@
                             Sign In With
                         </span>
 
-                        <a href="#" class="btn-face m-b-20">
-                            <i class="fa fa-facebook-official"></i>
+                        <a href="#" class="btn-face m-b-20" style="text-decoration: none">
+                           <i class="fab fa-facebook-f"></i>
                             Facebook
                         </a>
 
-                        <a href="#" class="btn-google m-b-20">
+                        <a href="#" class="btn-google m-b-20" style="text-decoration: none">
                             <img src="img/icons/icon-google.png" alt="GOOGLE">
                             Google
                         </a>
@@ -68,7 +68,7 @@
                             <span class="focus-input100"></span>
                         </div>
                         <div class="p-t-13 p-b-9">
-                            <a href="#" class="txt2 bo1 m-l-5">
+                            <a href="#" class="txt2 bo1 m-l-5" style="text-decoration: none">
                                 Forgot Password  ?
                             </a>
                         </div>

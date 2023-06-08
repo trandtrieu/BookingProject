@@ -33,34 +33,6 @@ public class OrderDao {
     public OrderDao() {
     }
 
-    public boolean insertOrder(BookTour model) {
-        boolean result = false;
-        try {
-            query = "insert into bookTour(t_id, u_id, book_date, book_cusName, book_address, book_phone,\n"
-                    + "book_email, book_quantityAd, book_quantityChild, note, total_amount)\n"
-                    + "values(?,?,?,?,?,?,?,?,?,?,?)";
-            pst = this.con.prepareStatement(query);
-            pst.setInt(1, model.getOrderId());
-            pst.setInt(2, model.getUser_id());
-            pst.setString(3, model.getDate());
-            pst.setString(4, model.getName());
-            pst.setString(5, model.getAddress());
-            pst.setString(6, model.getPhone());
-            pst.setString(7, model.getEmail());
-            pst.setInt(8, model.getQuantityAd());
-            pst.setInt(9, model.getQuantityChildren());
-            pst.setString(10, model.getNote());
-            pst.setFloat(11, model.getTotalAmount());
-
-            pst.executeUpdate();
-            result = true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            result = false;
-        }
-        return result;
-    }
-
     public List<BookTour> userOrders(int id) {
         List<BookTour> list = new ArrayList<>();
         try {
@@ -100,5 +72,33 @@ public class OrderDao {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+
+    public boolean insertOrder(BookTour model) {
+        boolean result = false;
+        try {
+            query = "insert into bookTour(t_id, u_id, book_date, book_cusName, book_address, book_phone,\n"
+                    + "book_email, book_quantityAd, book_quantityChild, note, total_amount)\n"
+                    + "values(?,?,?,?,?,?,?,?,?,?,?)";
+            pst = this.con.prepareStatement(query);
+            pst.setInt(1, model.getOrderId());
+            pst.setInt(2, model.getUser_id());
+            pst.setString(3, model.getDate());
+            pst.setString(4, model.getName());
+            pst.setString(5, model.getAddress());
+            pst.setString(6, model.getPhone());
+            pst.setString(7, model.getEmail());
+            pst.setInt(8, model.getQuantityAd());
+            pst.setInt(9, model.getQuantityChildren());
+            pst.setString(10, model.getNote());
+            pst.setFloat(11, model.getTotalAmount());
+
+            pst.executeUpdate();
+            result = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = false;
+        }
+        return result;
     }
 }

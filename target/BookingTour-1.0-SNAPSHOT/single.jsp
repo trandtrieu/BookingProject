@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -65,9 +66,7 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#menu1">Điều khoản và chính sách</a>
                         </li>
-                        <li class="nav-item">
-                            <a id="menu2-tab" class="nav-link" data-toggle="tab" href="#menu2">Ðang ký tour</a>
-                        </li>
+
                     </ul>
 
                     <!-- Tab panes -->
@@ -94,12 +93,15 @@
 
                 <div class="col-md-6">
 
-                    <div class="col-md-12"
-                         <h2>${detail.tourName}</h2>
-                        <p><strong>Price:</strong> <c:out value="${String.format('%.0f', detail.price)}" /> <span>VND</span></p>
+                    <div class="col-md-12">
+                        <h1>${detail.tourName} <span class="badge badge-danger">New</span></h1>
+
+<!--                         <h2> ${detail.tourName} </h2>-->
+                        <p><strong>Price: </strong><fmt:formatNumber value=" ${detail.price}" pattern="#,##0" /> VND</p>
+
                         <p><strong>Departure Date:</strong> ${detail.dateStart}</p>
                         <p><strong>Return Date:</strong> ${detail.dateEnd}</p>
-                        <p><strong>Hotel:</strong> ${detail.hotelName}</p>
+<!--                        <p><strong>Hotel:</strong> ${detail.hotelName}</p>-->
                         <p><strong>Place:</strong> ${detail.placeName}</p>
                         <p><a href="detailGuide?gid=${detail.guideId}">
                                 <strong>Your guide:</strong> ${detail.guideName}
@@ -133,7 +135,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="children">Số lượng trẻ em:</label>
-                                    <input type="number" class="form-control" id="children" name="children" placeholder="Nhập số lượng trẻ em" min="0" value="1">
+                                    <input type="number" class="form-control" id="children" name="children" placeholder="Nhập số lượng trẻ em" min="0">
                                 </div>
 
                                 <div class="form-group">
@@ -174,155 +176,6 @@
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://web8802.com/wp-content/themes/hienads/assets/js/quanhuyen.js"></script>
-    <script>
-                                            if (address_2 = localStorage.getItem('address_2_saved')) {
-
-                                                $('select[name="calc_shipping_district"] option').each(function () {
-
-                                                    if ($(this).text() == address_2) {
-
-                                                        $(this).attr('selected', '')
-
-                                                    }
-
-                                                })
-
-                                                $('input.billing_address_2').attr('value', address_2)
-
-                                            }
-
-                                            if (district = localStorage.getItem('district')) {
-
-                                                $('select[name="calc_shipping_district"]').html(district)
-
-                                                $('select[name="calc_shipping_district"]').on('change', function () {
-
-                                                    var target = $(this).children('option:selected')
-
-                                                    target.attr('selected', '')
-
-                                                    $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
-
-                                                    address_2 = target.text()
-
-                                                    $('input.billing_address_2').attr('value', address_2)
-
-                                                    district = $('select[name="calc_shipping_district"]').html()
-
-                                                    localStorage.setItem('district', district)
-
-                                                    localStorage.setItem('address_2_saved', address_2)
-
-                                                })
-
-                                            }
-
-                                            $('select[name="calc_shipping_provinces"]').each(function () {
-
-                                                var $this = $(this),
-                                                        stc = ''
-
-                                                c.forEach(function (i, e) {
-
-                                                    e += +1
-
-                                                    stc += '<option value=' + e + '>' + i + '</option>'
-
-                                                    $this.html('<option value="">Tỉnh / Thành phố</option>' + stc)
-
-                                                    if (address_1 = localStorage.getItem('address_1_saved')) {
-
-                                                        $('select[name="calc_shipping_provinces"] option').each(function () {
-
-                                                            if ($(this).text() == address_1) {
-
-                                                                $(this).attr('selected', '')
-
-                                                            }
-
-                                                        })
-
-                                                        $('input.billing_address_1').attr('value', address_1)
-
-                                                    }
-
-                                                    $this.on('change', function (i) {
-
-                                                        i = $this.children('option:selected').index() - 1
-
-                                                        var str = '',
-                                                                r = $this.val()
-
-                                                        if (r != '') {
-
-                                                            arr[i].forEach(function (el) {
-
-                                                                str += '<option value="' + el + '">' + el + '</option>'
-
-                                                                $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>' + str)
-
-                                                            })
-
-                                                            var address_1 = $this.children('option:selected').text()
-
-                                                            var district = $('select[name="calc_shipping_district"]').html()
-
-                                                            localStorage.setItem('address_1_saved', address_1)
-
-                                                            localStorage.setItem('district', district)
-
-                                                            $('select[name="calc_shipping_district"]').on('change', function () {
-
-                                                                var target = $(this).children('option:selected')
-
-                                                                target.attr('selected', '')
-
-                                                                $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
-
-                                                                var address_2 = target.text()
-
-                                                                $('input.billing_address_2').attr('value', address_2)
-
-                                                                district = $('select[name="calc_shipping_district"]').html()
-
-                                                                localStorage.setItem('district', district)
-
-                                                                localStorage.setItem('address_2_saved', address_2)
-
-                                                            })
-
-                                                        } else {
-
-                                                            $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>')
-
-                                                            district = $('select[name="calc_shipping_district"]').html()
-
-                                                            localStorage.setItem('district', district)
-
-                                                            localStorage.removeItem('address_1_saved', address_1)
-
-                                                        }
-
-                                                    })
-
-                                                })
-
-                                            })
-
-
-                                            function redirectToDetail(tourId) {
-                                                window.location.href = "detail?tid=" + tourId;
-                                            }
-
-
-                                            function openRegistrationTab() {
-                                                document.getElementById("menu1-tab").classList.remove("active");
-                                                document.getElementById("menu2-tab").classList.add("active");
-                                                document.getElementById("menu1").classList.remove("show", "active");
-                                                document.getElementById("menu2").classList.add("show", "active");
-                                            }
-
-    </script>
 
     <%@include file="includes/foot.jsp" %>
 

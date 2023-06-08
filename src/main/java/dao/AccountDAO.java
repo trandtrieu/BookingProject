@@ -61,15 +61,13 @@ public class AccountDAO {
             ps.setString(1, username);
             ps.setString(2, password);
             rs = ps.executeQuery();
-//            while (rs.next()) {
-//                AccountDTO acc = new AccountDTO(rs.getInt(1), rs.getString(2), rs.getString(3));
-//                return acc;
-//            }
             if (rs.next()) {
                 acc = new AccountDTO();
-                acc.setId(rs.getInt("id"));
+                acc.setId(rs.getInt("u_id"));
                 acc.setUsername(rs.getString("username"));
                 acc.setPassword(rs.getString("password"));
+                acc.setRole(rs.getInt("role"));
+
                 return acc;
             }
         } catch (Exception e) {

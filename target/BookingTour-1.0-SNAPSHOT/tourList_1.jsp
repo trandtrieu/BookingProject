@@ -38,6 +38,7 @@
                     <c:set var="totalPages" value="${(regionTours.size() + itemsPerPage - 1) / itemsPerPage}" /> <!-- Tổng số trang -->
 
                     <c:forEach var="t" items="${regionTours}" varStatus="status">
+                        
                         <c:if test="${status.index >= (currentPage - 1) * itemsPerPage && status.index < currentPage * itemsPerPage}">
                             <div class="col-lg-4 col-md-6 mb-4" >
                                 <div class="package-item bg-white mb-2">

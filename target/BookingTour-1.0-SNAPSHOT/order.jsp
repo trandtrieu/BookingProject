@@ -36,10 +36,12 @@
                 <tbody>
                     <c:forEach items="${myOrders}" var="o">
                         <tr>     
-                            <td>${o.orderId}</td>
+                            <td><a href="detail?tid=${o.tourId}">${o.tourId}</a></td>
                             <td>${o.date}</td>
                             <td>${o.name}</td>
-                            <td>${o.tourName}</td>
+
+                            <td><a href="detail?tid=${o.tourId} " >${o.tourName}</a></td>
+
                             <td>${o.quantityAd} - ${o.quantityChildren}</td>
                             <td>${o.tourId}</td>
                             <td><c:out value="${String.format('%.0f', o.totalAmount)} VND" /></td>
@@ -50,16 +52,16 @@
                     </c:forEach>
 
                 </tbody>
-                
+
             </table>
             <c:if test="${empty myOrders}">
-                    <div class="alert alert-warning d-flex justify-content-center align-items-center" role="alert">
-                        <div class="text-center">
-                            <h4 class="alert-heading mb-3">Thông báo</h4>
-                            <p class="mb-0">Danh sách của bạn hiện đang trống.</p>
-                        </div>
+                <div class="alert alert-warning d-flex justify-content-center align-items-center" role="alert">
+                    <div class="text-center">
+                        <h4 class="alert-heading mb-3">Thông báo</h4>
+                        <p class="mb-0">Danh sách của bạn hiện đang trống.</p>
                     </div>
-                </c:if>
+                </div>
+            </c:if>
         </div>
         <%@include file="includes/footer.jsp" %>
 
