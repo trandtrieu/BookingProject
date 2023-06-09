@@ -12,6 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Day la Admin</h1>
+        <a href="HomeController">Den trang chu</a>
+
     </body>
 </html>

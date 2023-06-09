@@ -88,7 +88,7 @@
                                 </c:if>
 
                                 <c:if test="${sessionScope.acc != null}">
-                                    <a class="nav-item nav-link" style="text-decoration: none" href="profile.jsp">
+                                    <a class="nav-item nav-link" style="text-decoration: none" href="Profile">
                                         Hello ${sessionScope.acc.username}
                                     </a>
                                 </c:if> 

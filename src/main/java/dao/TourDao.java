@@ -42,7 +42,7 @@ public class TourDao {
         List<Tour> tours = new ArrayList<>();
 
         try ( PreparedStatement pst = con.prepareStatement(
-                "SELECT *, place.placeName, hotel.hotelName\n"
+                "SELECT *\n"
                 + "FROM tour\n"
                 + "JOIN place ON tour.placeId = place.placeId\n"
                 + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"

@@ -91,6 +91,23 @@ public class AccountDAO {
         }
         return null;
     }
+    
+        public static AccountDTO checkAccountExistt(String username) {
+        try {
+            String query = "select * from account \n"
+                    + "where username = ?;";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new AccountDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
 
     public void register(String username, String pass, String email, String phone) {
         try {
