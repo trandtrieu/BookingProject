@@ -53,7 +53,6 @@
                                             <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2 "></i>${t.dateEnd}</small>
                                         </div>
                                         <div class="d-flex justify-content-between mb-3">
-                                            <small class="m-0"><i class="fa fa-hotel text-primary mr-2"></i>${t.hotelName}</small>
                                             <small class="m-0"><i class="fa fa-map text-primary mr-2"></i>${t.regionName}</small>
                                         </div>
                                         <a class="h5 text-decoration-none" href="detail?tid=${t.tourId}">${t.tourName}  <span class="badge badge-danger">HOT</span></a>

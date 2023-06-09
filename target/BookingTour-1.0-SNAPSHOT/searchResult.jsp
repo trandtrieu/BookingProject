@@ -51,7 +51,6 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between mb-3">
-                                        <small class="m-0"><i class="fa fa-hotel text-primary mr-2"></i>${t.hotelName}</small>
                                         <small class="m-0"><i class="fa fa-map text-primary mr-2"></i>${t.regionName}</small>
                                     </div>
 

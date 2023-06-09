@@ -45,7 +45,6 @@ public class TourDao {
                 "SELECT *\n"
                 + "FROM tour\n"
                 + "JOIN place ON tour.placeId = place.placeId\n"
-                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
                 + "JOIN region ON tour.regionId = region.regionId");  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -74,7 +73,6 @@ public class TourDao {
         tour.setDetailTour(rs.getString("detail"));
         tour.setStatusTour(rs.getBoolean("status"));
         tour.setPlaceName(rs.getString("placeName"));
-        tour.setHotelName(rs.getString("hotelName"));
         tour.setRegionName(rs.getString("regionName"));
 
         // Tính toán lịch trình từ dateStart đến dateEnd
@@ -116,7 +114,6 @@ public class TourDao {
         String query = "SELECT *    "
                 + "FROM tour\n"
                 + "JOIN place ON tour.placeId = place.placeId \n"
-                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
                 + "JOIN region ON tour.regionId = region.regionId\n"
                 + "JOIN schedule ON tour.scheduleId = schedule.scheduleId\n"
                 + "JOIN tourGuider ON tour.guideId = tourGuider.guideId\n"
@@ -146,7 +143,6 @@ public class TourDao {
                         rs.getString("image"),
                         rs.getBoolean("status"),
                         rs.getString("placeName"),
-                        rs.getString("hotelName"),
                         rs.getString("regionName"),
                         rs.getInt("guideId"),
                         rs.getString("guideName"));
@@ -172,8 +168,7 @@ public class TourDao {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getBoolean(8),
-                        rs.getString(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
 
             }
         } catch (SQLException e) {
@@ -182,10 +177,9 @@ public class TourDao {
     }
 
     public List<Tour> getToursByRegionName(String regionName) {
-        String query = "SELECT *, place.placeName, hotel.hotelName "
+        String query = "SELECT *, place.placeName "
                 + "FROM tour "
                 + "JOIN place ON tour.placeId = place.placeId "
-                + "JOIN hotel ON tour.hotelId = hotel.hotelId "
                 + "JOIN region ON tour.regionId = region.regionId "
                 + "JOIN schedule ON tour.scheduleId = schedule.scheduleId "
                 + "WHERE regionName LIKE ?";
@@ -194,10 +188,9 @@ public class TourDao {
     }
 
     public List<Tour> getToursByName(String tourName) {
-        String query = "SELECT *, place.placeName, hotel.hotelName "
+        String query = "SELECT *, place.placeName "
                 + "FROM tour "
                 + "JOIN place ON tour.placeId = place.placeId "
-                + "JOIN hotel ON tour.hotelId = hotel.hotelId "
                 + "JOIN region ON tour.regionId = region.regionId "
                 + "JOIN schedule ON tour.scheduleId = schedule.scheduleId "
                 + "WHERE name LIKE ?";
@@ -226,7 +219,6 @@ public class TourDao {
                 row.setDetailTour(rs.getString("detail"));
                 row.setStatusTour(rs.getBoolean("status"));
                 row.setPlaceName(rs.getString("placeName"));
-                row.setHotelName(rs.getString("hotelName"));
                 row.setRegionName(rs.getString("regionName"));
 
                 list.add(row);
@@ -247,7 +239,6 @@ public class TourDao {
                 + "FROM region\n"
                 + "JOIN tour ON tour.regionId = region.regionId \n"
                 + "JOIN place ON tour.placeId = place.placeId\n"
-                + "JOIN hotel ON tour.hotelId = hotel.hotelId\n"
                 + "JOIN tourGuider ON tour.guideId = tourGuider.guideId\n"
                 + "\n"
                 + "where region.regionId = ?";
@@ -268,7 +259,6 @@ public class TourDao {
                         rs.getString("image"),
                         rs.getBoolean("status"),
                         rs.getString("placeName"),
-                        rs.getString("hotelName"),
                         rs.getString("regionName"),
                         rs.getInt("guideId"),
                         rs.getString("guideName"));

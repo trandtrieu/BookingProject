@@ -101,7 +101,6 @@
 
                         <p><strong>Departure Date:</strong> ${detail.dateStart}</p>
                         <p><strong>Return Date:</strong> ${detail.dateEnd}</p>
-<!--                        <p><strong>Hotel:</strong> ${detail.hotelName}</p>-->
                         <p><strong>Place:</strong> ${detail.placeName}</p>
                         <p><a href="detailGuide?gid=${detail.guideId}">
                                 <strong>Your guide:</strong> ${detail.guideName}

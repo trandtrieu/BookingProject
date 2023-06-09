@@ -21,13 +21,12 @@ public class Tour {
     private String imageTour;
     private Boolean statusTour;
     private String placeName;
-    private String hotelName;
     private String regionName;
     private int numberDay;
     private int guideId;
     private String guideName;
 
-    public Tour(int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName, String hotelName, String regionName, int guideId, String guideName) {
+    public Tour(int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName, String regionName, int guideId, String guideName) {
         this.tourId = tourId;
         this.tourName = tourName;
         this.price = price;
@@ -37,14 +36,13 @@ public class Tour {
         this.imageTour = imageTour;
         this.statusTour = statusTour;
         this.placeName = placeName;
-        this.hotelName = hotelName;
         this.regionName = regionName;
         this.guideId = guideId;
         this.guideName = guideName;
 
     }
 
-    public Tour(int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName, String hotelName) {
+    public Tour(int tourId, String tourName, float price, Date dateStart, Date dateEnd, String detailTour, String imageTour, Boolean statusTour, String placeName) {
         this.tourId = tourId;
         this.tourName = tourName;
         this.price = price;
@@ -54,7 +52,6 @@ public class Tour {
         this.imageTour = imageTour;
         this.statusTour = statusTour;
         this.placeName = placeName;
-        this.hotelName = hotelName;
     }
 
     public Tour(int tourId) {
@@ -160,13 +157,7 @@ public class Tour {
         this.placeName = placeName;
     }
 
-    public String getHotelName() {
-        return hotelName;
-    }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
-    }
 
     public int getGuideId() {
         return guideId;
@@ -176,9 +167,6 @@ public class Tour {
         this.guideId = guideId;
     }
 
-    @Override
-    public String toString() {
-        return "Tour{" + "tourId=" + tourId + ", tourName=" + tourName + ", price=" + price + ", dateStart=" + dateStart + ", dateEnd=" + dateEnd + ", detailTour=" + detailTour + ", imageTour=" + imageTour + ", statusTour=" + statusTour + ", placeName=" + placeName + ", hotelName=" + hotelName + '}';
-    }
+
 
 }
